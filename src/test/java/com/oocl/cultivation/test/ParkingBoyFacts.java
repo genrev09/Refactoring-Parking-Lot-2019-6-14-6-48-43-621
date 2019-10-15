@@ -49,8 +49,8 @@ class ParkingBoyFacts {
         Car car3 = new Car();
 
         ParkingTicket parkingTicket1 = parkingBoy.park(car1);
-        ParkingTicket parkingTicket2 = parkingBoy.park(car2);
-        ParkingTicket parkingTicket3 = parkingBoy.park(car3);
+        parkingBoy.park(car2);
+        parkingBoy.park(car3);
 
         assertEquals(parkingLot.countCars(),3);
         assertEquals(car1,parkingLot.getCar(parkingTicket1));
@@ -62,7 +62,7 @@ class ParkingBoyFacts {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
-        ParkingTicket parkingTicket = parkingBoy.park(car);
+        parkingBoy.park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
 
         assertNull(parkingLot.getCar(wrongTicket));
@@ -77,7 +77,6 @@ class ParkingBoyFacts {
         Car car = new Car();
 
         ParkingTicket parkingTicket = parkingBoy.park(car);
-        Car fetchedCar = parkingBoy.fetch(parkingTicket);
         Car car2 = parkingBoy.fetch(parkingTicket);
 
         assertNull(car2);
