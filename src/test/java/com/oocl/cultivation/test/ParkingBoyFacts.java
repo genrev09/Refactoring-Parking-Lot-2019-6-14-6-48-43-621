@@ -77,6 +77,7 @@ class ParkingBoyFacts {
         Car car = new Car();
 
         ParkingTicket parkingTicket = parkingBoy.park(car);
+        parkingBoy.fetch(parkingTicket);
         Car car2 = parkingBoy.fetch(parkingTicket);
 
         assertNull(car2);
