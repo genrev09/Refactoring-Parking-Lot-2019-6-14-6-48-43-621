@@ -125,7 +125,6 @@ class ParkingBoyFacts {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
 
-        //Fill Parking Lot
         for (int park_times = 0; park_times < parkingLot.getCapacity(); park_times++){
             parkingBoy.park(new Car());
         }
@@ -141,8 +140,7 @@ class ParkingBoyFacts {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         parkingBoy.addParkingLot(new ParkingLot());
         Car car = new Car();
-
-        //Fill Parking Lot
+        
         for (int count = 0; count < parkingLot.getCapacity(); count ++){
             parkingBoy.park(new Car());
         }
