@@ -11,22 +11,18 @@ public class SuperSmartParkingBoy extends ParkingBoy {
     @Override
     public ParkingTicket park(Car car) {
         BiPredicate<ParkingLot,ParkingLot> hasHighPositionRate = (parkingLot1, parkingLot2) ->
-                getPositionRate(parkingLot1) >= getPositionRate(parkingLot2);
+                parkingLot1.getAvailableParkingPosition() / parkingLot1.getCapacity()
+                >= parkingLot2.getAvailableParkingPosition()/parkingLot2.getCapacity();
 
         ParkingLot parkingLotWithHighPositionRate = getParkingLotList().stream()
                 .reduce((parking1, parking2)
-                -> getHigherPositionRate(hasHighPositionRate, parking1, parking2)).orElse(null);
+                -> hasHighPositionRate.test(parking1,parking2)
+                ? parking1 : parking2).orElse(null);
 
-        if (parkingLotWithHighPositionRate == null)
+        if (parkingLotWithHighPositionRate == null){
+            setLastErrorMessage("Not enough position.");
             return null;
+        }
         return parkingLotWithHighPositionRate.addCar(car);
-    }
-
-    private int getPositionRate(ParkingLot parkingLot) {
-        return parkingLot.getAvailableParkingPosition() / parkingLot.getCapacity();
-    }
-
-    private ParkingLot getHigherPositionRate(BiPredicate<ParkingLot, ParkingLot> hasHighPositionRate, ParkingLot parking1, ParkingLot parking2) {
-        return hasHighPositionRate.test(parking1,parking2) ? parking1 : parking2;
     }
 }

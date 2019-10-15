@@ -10,10 +10,6 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingBoyFacts {
-    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
-    private static final String NO_TICKET_MESSAGE = "Please provide your parking ticket.";
-    private static final String FULL_PARKING_LOT_MESSAGE = "Not enough position.";
-    private static final int ONE = 1;
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @BeforeEach
@@ -53,8 +49,8 @@ class ParkingBoyFacts {
         Car car3 = new Car();
 
         ParkingTicket parkingTicket1 = parkingBoy.park(car1);
-        parkingBoy.park(car2);
-        parkingBoy.park(car3);
+        ParkingTicket parkingTicket2 = parkingBoy.park(car2);
+        ParkingTicket parkingTicket3 = parkingBoy.park(car3);
 
         assertEquals(parkingLot.countCars(),3);
         assertEquals(car1,parkingLot.getCar(parkingTicket1));
@@ -66,7 +62,7 @@ class ParkingBoyFacts {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
-        parkingBoy.park(car);
+        ParkingTicket parkingTicket = parkingBoy.park(car);
         ParkingTicket wrongTicket = new ParkingTicket();
 
         assertNull(parkingLot.getCar(wrongTicket));
@@ -81,7 +77,7 @@ class ParkingBoyFacts {
         Car car = new Car();
 
         ParkingTicket parkingTicket = parkingBoy.park(car);
-        parkingBoy.fetch(parkingTicket);
+        Car fetchedCar = parkingBoy.fetch(parkingTicket);
         Car car2 = parkingBoy.fetch(parkingTicket);
 
         assertNull(car2);
@@ -110,7 +106,7 @@ class ParkingBoyFacts {
         parkingBoy.fetch(ticket);
         parkingBoy.fetch(ticket);
 
-        assertEquals(UNRECOGNIZED_PARKING_TICKET,parkingBoy.getLastErrorMessage());
+        assertEquals("Unrecognized parking ticket.",parkingBoy.getLastErrorMessage());
     }
 
     @Test
@@ -120,7 +116,7 @@ class ParkingBoyFacts {
 
         parkingBoy.fetch(null);
 
-        assertEquals(NO_TICKET_MESSAGE,parkingBoy.getLastErrorMessage());
+        assertEquals("Please provide your parking ticket.",parkingBoy.getLastErrorMessage());
     }
 
     @Test
@@ -129,13 +125,14 @@ class ParkingBoyFacts {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
 
+        //Fill Parking Lot
         for (int park_times = 0; park_times < parkingLot.getCapacity(); park_times++){
             parkingBoy.park(new Car());
         }
 
         parkingBoy.park(car);
 
-        assertEquals(FULL_PARKING_LOT_MESSAGE, parkingBoy.getLastErrorMessage());
+        assertEquals("Not enough position.", parkingBoy.getLastErrorMessage());
     }
 
     @Test
@@ -145,6 +142,7 @@ class ParkingBoyFacts {
         parkingBoy.addParkingLot(new ParkingLot());
         Car car = new Car();
 
+        //Fill Parking Lot
         for (int count = 0; count < parkingLot.getCapacity(); count ++){
             parkingBoy.park(new Car());
         }
@@ -164,8 +162,8 @@ class ParkingBoyFacts {
         smartParkingBoy.park(new Car());
         smartParkingBoy.park(new Car());
 
-        assertEquals(ONE,parkingLot1.countCars());
-        assertEquals(ONE,parkingLot2.countCars());
+        assertEquals(1,parkingLot1.countCars());
+        assertEquals(1,parkingLot2.countCars());
     }
 
     @Test
@@ -178,7 +176,10 @@ class ParkingBoyFacts {
         superSmartParkingBoy.park(new Car());
         superSmartParkingBoy.park(new Car());
 
-        assertEquals(ONE,parkingLot1.countCars());
-        assertEquals(ONE,parkingLot2.countCars());
+        assertEquals(1,parkingLot1.countCars());
+        assertEquals(1,parkingLot2.countCars());
+    }
+    private String systemOut() {
+        return outContent.toString();
     }
 }
