@@ -13,4 +13,4 @@ Long Method:
 - There are a lot of methods that has complex logic. I just created another method that does the other logic.
 
 Duplicate Code:
-- There are some duplicate codes. I just created another method that can be reused.
+- There are some duplicate codes. I just created another method/variable that can be reused.
