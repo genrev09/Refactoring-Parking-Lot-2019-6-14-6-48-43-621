@@ -5,6 +5,9 @@ import java.util.List;
 
 public class ParkingBoy {
 
+    public static final String FULL_PARKING_ERRORMESSAGE = "Not enough position.";
+    public static final String NO_TICKET_ERRORMESSAGE = "Please provide your parking ticket.";
+    public static final String INVALID_TICKET_ERRORMESSAGE = "Unrecognized parking ticket.";
     private final ParkingLot parkingLot;
     private String lastErrorMessage;
     private List<ParkingLot> parkingLotList = new ArrayList<>();
@@ -22,7 +25,7 @@ public class ParkingBoy {
                     .filter(parkingLot -> parkingLot.countCars() != parkingLot.getCapacity())
                     .findFirst().orElse(null);
             if (availableParkingLot == null){
-                setLastErrorMessage("Not enough position.");
+                setLastErrorMessage(FULL_PARKING_ERRORMESSAGE);
                 return null;
             } else {
                 return availableParkingLot.addCar(car);
@@ -33,9 +36,9 @@ public class ParkingBoy {
     public Car fetch(ParkingTicket ticket) {
         Car car = parkingLot.getCar(ticket);
         if (ticket == null)
-            setLastErrorMessage("Please provide your parking ticket.");
+            setLastErrorMessage(NO_TICKET_ERRORMESSAGE);
         else if (car == null)
-            setLastErrorMessage("Unrecognized parking ticket.");
+            setLastErrorMessage(INVALID_TICKET_ERRORMESSAGE);
         return car;
     }
 
