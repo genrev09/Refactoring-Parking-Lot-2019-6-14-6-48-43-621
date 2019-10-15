@@ -2,6 +2,7 @@ package com.oocl.cultivation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ParkingBoy {
 
@@ -22,7 +23,7 @@ public class ParkingBoy {
             return parkingLot.addCar(car);
         else {
             ParkingLot availableParkingLot = parkingLotList.stream()
-                    .filter(parkingLot -> parkingLot.countCars() != parkingLot.getCapacity())
+                    .filter(getParkingLotWithSpace())
                     .findFirst().orElse(null);
             if (availableParkingLot == null){
                 setLastErrorMessage(FULL_PARKING_ERRORMESSAGE);
@@ -31,6 +32,10 @@ public class ParkingBoy {
                 return availableParkingLot.addCar(car);
             }
         }
+    }
+
+    private Predicate<ParkingLot> getParkingLotWithSpace() {
+        return parkingLot -> parkingLot.countCars() != parkingLot.getCapacity();
     }
 
     public Car fetch(ParkingTicket ticket) {
