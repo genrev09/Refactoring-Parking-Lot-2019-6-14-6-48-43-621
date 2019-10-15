@@ -2,8 +2,6 @@ package com.oocl.cultivation;
 
 public class SmartParkingBoy extends ParkingBoy {
 
-    public static final String FULL_PARKING_ERRORMESSAGE = "Not enough position.";
-
     public SmartParkingBoy(ParkingLot parkingLot) {
         super(parkingLot);
     }

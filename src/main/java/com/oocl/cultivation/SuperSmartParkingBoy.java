@@ -5,8 +5,6 @@ import java.util.function.IntPredicate;
 
 public class SuperSmartParkingBoy extends ParkingBoy {
 
-    public static final String FULL_PARKING_ERRORMESSAGE = "Not enough position.";
-
     public SuperSmartParkingBoy(ParkingLot parkingLot) {
         super(parkingLot);
     }
